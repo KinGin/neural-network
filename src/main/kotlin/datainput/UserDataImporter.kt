@@ -51,7 +51,7 @@ class UserDataImporter {
         return ArrayList(list.map { item -> item.replace(',','.').toDouble() })
     }
 
-    public fun parseInputParams(list: List<String>, skipColumnsWithIndex: List<Number> = listOf(3)): List<String>{
+    public fun parseInputParams(list: List<String>, skipColumnsWithIndex: List<Number> = listOf(0, 3)): List<String>{
 
         val result = ArrayList<String>()
         list.forEachIndexed{index, value ->
