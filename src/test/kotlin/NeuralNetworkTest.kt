@@ -10,6 +10,7 @@ public class NeuralNetworkTest {
     private val userDataImporter = UserDataImporter()
     private val testUserDataPath = "/Users/kingin/code/neuro/src/test/resources/input/users.csv"
     private val dataRows = userDataImporter.getDataRowsAsDataSet(testUserDataPath)
+    private val targetDataRows = userDataImporter.getDataRowsAsDataSet(testUserDataPath)
     val neuralNetwork = NeuralNetwork(dataRows.inputSize, dataRows.outputSize)
     val normalizer = MaxNormalizer()
 
@@ -18,10 +19,10 @@ public class NeuralNetworkTest {
     public fun dataSetTest() {
         neuralNetwork.train(dataRows, 1000)
 
-        normalizer.normalize(dataRows)
+        normalizer.normalize(targetDataRows)
 
-        val targetRowOne = dataRows.getRowAt(0)
-        val targetRowTwo = dataRows.getRowAt(1)
+        val targetRowOne = targetDataRows.getRowAt(0)
+        val targetRowTwo = targetDataRows.getRowAt(1)
 
         val result = neuralNetwork.estimate(targetRowOne)
         val resultTwo = neuralNetwork.estimate(targetRowTwo)
