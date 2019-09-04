@@ -15,6 +15,8 @@ import org.neuroph.util.data.norm.MaxNormalizer
 import java.util.*
 import org.neuroph.nnet.learning.MomentumBackpropagation
 import org.neuroph.core.events.LearningEvent
+import org.neuroph.core.transfer.Linear
+import org.neuroph.core.transfer.TransferFunction
 import java.math.RoundingMode
 import java.math.BigDecimal
 
@@ -45,12 +47,12 @@ public class NeuralNetwork(inputSize: Number, outputSize: Number) {
     }
 
     private fun inputLayer(inputSize: Number): Layer = layerCreation(inputSize)
-    private fun outputLayer(inputSize: Number): Layer = layerCreation(inputSize)
+    private fun outputLayer(inputSize: Number): Layer = layerCreation(inputSize, Linear())
 
-    private fun layerCreation(neuronAmount: Number): Layer {
+    private fun layerCreation(neuronAmount: Number, transferFunction: TransferFunction = Tanh()): Layer {
         val layer = Layer()
         for (i in 0 until neuronAmount.toInt()) {
-            layer.addNeuron(Neuron(WeightedSum(), Tanh()))
+            layer.addNeuron(Neuron(WeightedSum(), transferFunction))
         }
         return layer
     }
@@ -87,7 +89,7 @@ public class NeuralNetwork(inputSize: Number, outputSize: Number) {
         learningRule.addListener { handleLearningEvent(it) }
         learningRule.learningRate = 0.01
         learningRule.maxError = 0.01
-        learningRule.maxIterations = 10000
+        learningRule.maxIterations = iterations.toInt()
 
 
         //val backPropagation = BackPropagation()

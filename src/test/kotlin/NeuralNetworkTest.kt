@@ -17,7 +17,7 @@ public class NeuralNetworkTest {
 
     @Test
     public fun dataSetTest() {
-        neuralNetwork.train(dataRows, 1000)
+        neuralNetwork.train(dataRows, 500)
 
         normalizer.normalize(targetDataRows)
 
